@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Search</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Upload Image</h1>
+      <form action="#" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="imageUpload">Select image to upload:</label>
+          <input type="file" id="imageUpload" name="imageUpload" />
+        </div>
+        <div class="form-group">
+          <label for="modelRepresentation">Model Image Representation:</label>
+          <select id="modelRepresentation" name="modelRepresentation">
+            <option value="VLAD_k16">VLAD k = 16</option>
+            <option value="VLAD_k32">VLAD k = 32</option>
+            <option value="VLAD_k64">VLAD k = 64</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dataset">Dataset:</label>
+          <select id="dataset" name="dataset">
+            <option value="INRIA">INRIA</option>
+            <option value="Oxford">Oxford</option>
+            <option value="Paris">Paris</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="query">Query:</label>
+          <select id="query" name="query">
+            <option value="ADC_k256_m16">ADC k = 256 m = 16</option>
+            <option value="ADC_k128_m8">ADC k = 128 m = 8</option>
+            <option value="ADC_k512_m32">ADC k = 512 m = 32</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">Submit</button>
+      </form>
+      <!-- Gallery mặc định ẩn -->
+      <img
+        src=""
+        alt="Uploaded Image"
+        style="
+          width: 100%;
+          height: 500px;
+          object-fit: contain;
+          padding-top: 16px;
+          display: none;
+        "
+        id="image_search"
+      />
+      <div class="gallery" style="display: none">
+        <div class="result-images">
+          <img src="./image.jfif" alt="Result 1" id="image_result" />
+          <img src="./image.jfif" alt="Result 2" id="image_result" />
+          <img src="./image.jfif" alt="Result 3" id="image_result" />
+          <img src="./image.jfif" alt="Result 4" id="image_result" />
+          <img src="./image.jfif" alt="Result 5" id="image_result" />
+          <img src="./image.jfif" alt="Result 6" id="image_result" />
+          <img src="./image.jfif" alt="Result 7" id="image_result" />
+          <img src="./image.jfif" alt="Result 8" id="image_result" />
+        </div>
+      </div>
+    </div>
+    <script>
+      const imageUpload = document.getElementById("imageUpload");
+      const uploadedImage = document.getElementById("image_search");
+
+      imageUpload.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            uploadedImage.src = e.target.result;
+            uploadedImage.style.display = "block";
+          };
+
+          reader.readAsDataURL(file);
+        }
+      });
+    </script>
+
+    <script>
+      const gallery = document.querySelector(".gallery");
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        gallery.style.display = "block";
+      });
+    </script>
+  </body>
+</html>
